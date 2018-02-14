@@ -128,7 +128,7 @@ public class VisualisedTerminal implements TermPrint{
 		gr[current].drawString(p, 3, ySize-4);
 		if(gray)
 			gr[current].setColor(Color.white);
-		gr[current].drawString(t, xSize-60, ySize-4);
+		gr[current].drawString(t, xSize-80, ySize-4);
 	}
 	
 	private void drawString(String s, int c, boolean add){

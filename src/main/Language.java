@@ -23,7 +23,9 @@ public class Language {
 			
 			s = br.readLine();
 			while (s != null) {
-				if(!s.startsWith("//")){
+				if(s.length()<2){
+					//Nothing
+				}else if(!s.startsWith("//")){
 					String[] st = s.split(": ");
 					int id  = Integer.parseInt(st[0]);
 					String t = s.substring(st[0].length()+2);

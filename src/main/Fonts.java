@@ -21,6 +21,8 @@ public class Fonts {
 	public static Font fontBold14;
 
 	public static void createAllFonts(){
+		if(fontSans10 != null)
+			return;
 		font10 = createFont(10);
 		font12 = createFont(12);
 		font14 = createFont(14);

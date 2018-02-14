@@ -27,11 +27,10 @@ public class DebugFrame extends JPanel implements Runnable{
 	private VisualisedTerminal term;
 	
 	public DebugFrame(){
-		frame = new JFrame("Network-Debug");
+		Fonts.createAllFonts();
+		frame = new JFrame("Debug");
 		frame.setVisible(false);
 		frame.setBounds(50,100,320,400);
-		
-		new Fonts();
 		
 		term = new VisualisedTerminal(300, 800);
 		Debug.terminal = term;

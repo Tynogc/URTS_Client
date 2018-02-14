@@ -257,7 +257,7 @@ public class PerformanceMenu extends menu.AbstractMenu{
 		case Process:
 			return "Process:";
 		case Communication:
-			return "NPC movement:";
+			return "Background:";
 		case PaintEntity:
 			return "Paint Entity:";
 		case PaintGui:

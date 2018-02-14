@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+
 public class Main {
 
 	/**
@@ -12,6 +14,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if(!new File("log").exists())
+			new File("log/empty").mkdirs();
 		new SeyprisMain(new debug.DebugFrame(), true);
 	}
 }

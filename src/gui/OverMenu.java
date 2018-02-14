@@ -76,6 +76,7 @@ public class OverMenu extends AbstractMenu{
 		};
 		add(mainMenu);
 		mainMenu.showBlue();
+		mainMenu.setText(main.Language.lang.text(11100));
 		mainMenu.setVisible(false);
 		
 		alarmMenu = new SuperButtonMenu(0, 240, 101){
@@ -86,6 +87,9 @@ public class OverMenu extends AbstractMenu{
 			}
 		};
 		add(alarmMenu);
+		alarmMenu.setText(main.Language.lang.text(11101));
+		
+		gui.setUserMenu(sms.mainMenu);
 		
 		moveAble = false;
 	}
@@ -119,7 +123,7 @@ public class OverMenu extends AbstractMenu{
 				stateIsMain = true;
 				timeToMain = 0;
 				
-				gui.setUserMenu(null);
+				gui.setUserMenu(sms.mainMenu);
 				
 				locateButton();
 			}

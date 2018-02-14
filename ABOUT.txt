@@ -1,3 +1,11 @@
+#Idea:
+BRNK
+###
 #Code:
 Sven T. Schneider
+###
+#Uses Seypris(R)-User-Interface
+(The Seypris UI is (C) Sven T. Schneider [Nuernberg Germany])
+###
+#There will be more Credits soon xD
 ###
