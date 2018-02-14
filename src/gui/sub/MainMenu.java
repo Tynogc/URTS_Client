@@ -12,7 +12,7 @@ public class MainMenu extends AbstractMenu{
 	private gui.Credits credits;
 	
 	public MainMenu() {
-		super(0, 30, SeyprisMain.sizeX(), SeyprisMain.sizeY());
+		super(0, 30, SeyprisMain.sizeX(), SeyprisMain.sizeY()-600);
 		
 		credits = new Credits(SeyprisMain.sizeX()-440, 30, false);
 		add(credits);
