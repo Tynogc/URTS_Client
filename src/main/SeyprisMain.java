@@ -20,6 +20,8 @@ import java.util.concurrent.Semaphore;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import crypto.RSAsaveKEY;
 import debug.DebugFrame;
@@ -89,6 +91,8 @@ public class SeyprisMain extends JPanel{
 		
 		new Language();
 		
+		qq = 1080.0/(double)Toolkit.getDefaultToolkit().getScreenSize().height;
+		
 		frame = new JFrame(TITLE){
 			@Override
 			public void paint(Graphics g) {
@@ -153,7 +157,11 @@ public class SeyprisMain extends JPanel{
 		
 		//emots = new gui.utility.Emots();
 		
-		qq = 1080.0/(double)Toolkit.getDefaultToolkit().getScreenSize().height;
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		secondPhase();
 	}
@@ -220,6 +228,7 @@ public class SeyprisMain extends JPanel{
 		try {
 			if(fullScreen){
 				g = (Graphics2D)strategy.getDrawGraphics();
+				g.scale(1/qq, 1/qq);
 			}else{
 				g = (Graphics2D)back.getGraphics();
 			}
@@ -235,18 +244,18 @@ public class SeyprisMain extends JPanel{
 		int ymcc = 0;
 		if(!fullScreen){
 			g.setColor(Color.gray);
-			g.drawRect(0, 0, xPos, 30);
+			g.drawRect(0, 0, sizeX(), 30);
 			g.setColor(topRun);
-			g.drawRect(1, 1, xPos-2, 28);
+			g.drawRect(1, 1, sizeX()-2, 28);
 			ymcc = 30;
 		}
-		int ymc = yPos/(background.length-1);
+		int ymc = sizeY()/(background.length-1);
 		for (int i = 0; i < background.length; i++) {
 			g.setColor(background[i]);
-			g.fillRect(0, i*ymc+ymcc, xPos, ymc);
+			g.fillRect(0, i*ymc+ymcc, sizeX(), ymc);
 		}
 		g.setColor(Color.gray);
-		g.drawRect(0, 0, xPos-1, yPos-1);
+		g.drawRect(0, 0, sizeX()-1, sizeY()-1);
 		PerformanceMenu.markTime(PerformanceMenu.PaintBack);
 		
 		PerformanceMenu.markTime(PerformanceMenu.PaintEntity);
@@ -286,10 +295,14 @@ public class SeyprisMain extends JPanel{
 	}
 	
 	public static int sizeX(){
+		if(fullScreen)
+			return 1920;
 		return xPos;
 	}
 	
 	public static int sizeY(){
+		if(fullScreen)
+			return 1080;
 		return yPos;
 	}
 	
@@ -331,11 +344,11 @@ public class SeyprisMain extends JPanel{
 				frameMenu.isFullScreen(fs);
 			}
 			
-			int mX = (dim.width-xPos)/2;
-			int mY = (dim.height-yPos)/2-50;
+			int mX = (int)(dim.width-xPos/qq)/2;
+			int mY = (int)(dim.height-yPos/qq)/2-50;
 			if(!start)
 				mY = 20;
-			frame.setBounds(mX, mY, sizeX(), sizeY());
+			frame.setBounds(mX, mY, xPos, yPos);
 			frame.setBackground(topRun);
 			
 			back = new BufferedImage(xPos, yPos, BufferedImage.TYPE_INT_ARGB);
