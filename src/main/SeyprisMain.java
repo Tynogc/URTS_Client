@@ -9,7 +9,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -69,6 +71,8 @@ public class SeyprisMain extends JPanel{
 	private RSAsaveKEY myKey;
 	
 	private static SeyprisMain me;
+	
+	private double qq;
 	
 	private String[] infoStrings = new String[]{"",""};
 	
@@ -148,7 +152,8 @@ public class SeyprisMain extends JPanel{
 		});
 		
 		//emots = new gui.utility.Emots();
-	
+		
+		qq = 1080.0/(double)Toolkit.getDefaultToolkit().getScreenSize().height;
 		
 		secondPhase();
 	}
@@ -194,6 +199,9 @@ public class SeyprisMain extends JPanel{
 		PerformanceMenu.startTime();
 		
 		PerformanceMenu.markTime(PerformanceMenu.Communication);
+		
+		mouse.x = (int)((MouseInfo.getPointerInfo().getLocation().x-frame.getX())*qq);
+		mouse.y = (int)((MouseInfo.getPointerInfo().getLocation().y-frame.getY())*qq);
 		
 		if(key.requestTerminal){
 			key.requestTerminal = false;
@@ -254,6 +262,7 @@ public class SeyprisMain extends JPanel{
 		
 		g.setColor(Color.cyan);
 		g.setFont(Fonts.font12);
+		g.drawString("M:"+mouse.x+" "+mouse.y+" "+qq, 0, 44);
 		g.drawString("FPS: "+fps, 0, 57);
 		g.drawString("T: ["+thiFps+"]", 0, 70);
 		if(secFps<0)g.setColor(Color.red);

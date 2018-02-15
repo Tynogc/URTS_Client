@@ -45,7 +45,7 @@ public class ConServer extends ConCentralNode{
 
 	@Override
 	public void update() {
-		if(server.hasNew()){
+		if(server.hasNew()){//Add new connection to the List
 			sema.acquireUninterruptibly();
 			connectedClients.add(server.getNewlyConnected());
 			sema.release();

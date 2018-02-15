@@ -1,6 +1,7 @@
 package network.com;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -70,9 +71,17 @@ public abstract class ConCentralNode extends ConnectionHandler{
 	
 	@Override
 	public void update() {
-		for (TCPclient t : connectedClients) {
+		for (Iterator<TCPclient> i = connectedClients.iterator(); i.hasNext();) {
+			TCPclient t = i.next();
+			
+			//Check connect
+			if(!t.isRunning() || !t.isConnected()){
+				i.remove(); //This Client is dead
+				continue;
+			}
+			
 			String s = t.getNextInput();
-			if(s == null)
+			if(s == null) //Nothing to process
 				continue;
 			
 			if(s.startsWith(StaticComStrings.TAG_TO)){ //Forward Message
