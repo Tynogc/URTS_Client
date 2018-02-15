@@ -82,10 +82,16 @@ public abstract class ConCentralNode extends ConnectionHandler{
 				int u = sq.indexOf(StaticComStrings.TAGEND);
 				String to = sq.substring(0, u);
 				
-				if(!to.matches(t.getConnectionName())){
+				if(to.matches(StaticComStrings.TAG_ALL)){
+					//Send to everyone
+					for (TCPclient t2 : connectedClients) {
+						if(t2.isConnected())
+							t2.send(sq.substring(u+1));//Remove To-Tag
+					}
+				}else if(!to.matches(t.getConnectionName())){
 					//Search for match and send
 					for (TCPclient t2 : connectedClients) {
-						if(to.matches(t2.getConnectionName()))
+						if(to.matches(t2.getConnectionName()) && t2.isConnected())
 							t2.send(s);
 					}
 				}
