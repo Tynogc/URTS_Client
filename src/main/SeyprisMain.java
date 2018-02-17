@@ -256,7 +256,7 @@ public class SeyprisMain extends JPanel{
 			g.drawRect(1, 1, sizeX()-2, 28);
 			ymcc = 30;
 		}
-		int ymc = (sizeY()+10)/(background.length);
+		int ymc = (sizeY()+20)/(background.length-2);
 		for (int i = 0; i < background.length; i++) {
 			g.setColor(background[i]);
 			g.fillRect(0, i*ymc+ymcc, sizeX(), ymc);
@@ -326,11 +326,6 @@ public class SeyprisMain extends JPanel{
 			xPos = ub.width;
 			yPos = ub.height;
 			
-			if(frameMenu != null){
-				frameMenu.resize();
-				frameMenu.isFullScreen(fs);
-			}
-			
 			frame.setBounds(0, 0, xPos, yPos);
 			
 			xPos = (int)(qq*xPos);
@@ -338,6 +333,11 @@ public class SeyprisMain extends JPanel{
 			
 			//frame.setState(JFrame.MAXIMIZED_BOTH);
 			frame.setBackground(null);
+			
+			if(frameMenu != null){
+				frameMenu.resize();
+				frameMenu.isFullScreen(fs);
+			}
 		}else{
 			if(start){
 				xPos = 1900;

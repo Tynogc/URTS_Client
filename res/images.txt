@@ -98,3 +98,8 @@ res/ima/cli/spb/UserTopd.png
 res/ima/cli/spb/UserTopd.png
 res/men/25s.png
 res/men/25s.png
+res/ima/cli/spb/An.png
+res/ima/cli/spb/Ac.png
+res/ima/cli/spb/Af.png
+res/ima/cli/spb/Ad.png
+res/ima/cli/spb/Ad.png

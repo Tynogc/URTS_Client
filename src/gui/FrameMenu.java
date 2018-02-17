@@ -125,11 +125,12 @@ public class FrameMenu extends AbstractMenu{
 	
 	public void isFullScreen(boolean s){
 		isFullScreen = s;
-		minimised.setVisible(!s);
 		if(s){
 			maximised.setFilePath("res/ima/cli/spb/D");
+			minimised.setFilePath("res/ima/cli/spb/A");
 		}else{
 			maximised.setFilePath("res/ima/cli/spb/C");
+			minimised.setFilePath("res/ima/cli/spb/B");
 		}
 	}
 
