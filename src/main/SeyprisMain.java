@@ -74,7 +74,9 @@ public class SeyprisMain extends JPanel{
 	
 	private static SeyprisMain me;
 	
-	private double qq;
+	//Scaling variables (Strange JDK9 - HiDPI stuff)
+	private double qq = 1.0;
+	private double qq2;//Java version (Debug only)
 	
 	private String[] infoStrings = new String[]{"",""};
 	
@@ -91,7 +93,7 @@ public class SeyprisMain extends JPanel{
 		
 		new Language();
 		
-		qq = 1080.0/(double)Toolkit.getDefaultToolkit().getScreenSize().height;
+		qq2 = Double.parseDouble(System.getProperty("java.version").substring(0, 3));//Get java version
 		
 		frame = new JFrame(TITLE){
 			@Override
@@ -271,7 +273,7 @@ public class SeyprisMain extends JPanel{
 		
 		g.setColor(Color.cyan);
 		g.setFont(Fonts.font12);
-		g.drawString("M:"+mouse.x+" "+mouse.y+" "+qq, 0, 44);
+		g.drawString("M:"+mouse.x+" "+mouse.y+" "+qq+" "+qq2, 0, 44);
 		g.drawString("FPS: "+fps, 0, 57);
 		g.drawString("T: ["+thiFps+"]", 0, 70);
 		if(secFps<0)g.setColor(Color.red);
@@ -295,14 +297,10 @@ public class SeyprisMain extends JPanel{
 	}
 	
 	public static int sizeX(){
-		if(fullScreen)
-			return 1920;
 		return xPos;
 	}
 	
 	public static int sizeY(){
-		if(fullScreen)
-			return 1080;
 		return yPos;
 	}
 	
@@ -319,16 +317,18 @@ public class SeyprisMain extends JPanel{
 		
 		Dimension dim = getToolkit().getScreenSize();
 		if(fullScreen){
-			xPos = dim.width;
-			yPos = dim.height;
+			xPos = 1920;
+			yPos = 1080;
 			
 			if(frameMenu != null){
 				frameMenu.resize();
 				frameMenu.isFullScreen(fs);
 			}
 			
+			qq = 1080.0/(double)dim.getHeight();
+			
 			frame.setBounds(0, 0, sizeX(), sizeY());
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setState(JFrame.NORMAL);
 			frame.setBackground(null);
 		}else{
 			if(start){
@@ -338,6 +338,9 @@ public class SeyprisMain extends JPanel{
 				xPos = 1900;
 				yPos = 900;
 			}
+			
+			if(qq2>=1.89)//Is Java 1.9 or higher?
+				qq = (double)Toolkit.getDefaultToolkit().getScreenResolution()/96.0;//DPI rescaled
 			
 			if(frameMenu != null){
 				frameMenu.resize();

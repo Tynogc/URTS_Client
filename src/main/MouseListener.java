@@ -25,8 +25,8 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		x = e.getX();
-		y = e.getY();
+		//x = e.getX();
+		//y = e.getY();
 		
 		mouseDraggX = e.getXOnScreen();
 		mouseDraggY = e.getYOnScreen();
@@ -36,8 +36,8 @@ public class MouseListener implements java.awt.event.MouseListener, MouseMotionL
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		x = e.getX();
-		y = e.getY();
+		//x = e.getX();
+		//y = e.getY();
 	}
 
 	@Override
