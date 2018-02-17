@@ -9,7 +9,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
@@ -94,6 +97,8 @@ public class SeyprisMain extends JPanel{
 		new Language();
 		
 		qq2 = Double.parseDouble(System.getProperty("java.version").substring(0, 3));//Get java version
+		if(qq2>=1.89)//Is Java 1.9 or higher?
+			qq = (double)Toolkit.getDefaultToolkit().getScreenResolution()/96.0;//DPI rescaled
 		
 		frame = new JFrame(TITLE){
 			@Override
@@ -251,7 +256,7 @@ public class SeyprisMain extends JPanel{
 			g.drawRect(1, 1, sizeX()-2, 28);
 			ymcc = 30;
 		}
-		int ymc = sizeY()/(background.length-1);
+		int ymc = sizeY()/(background.length);
 		for (int i = 0; i < background.length; i++) {
 			g.setColor(background[i]);
 			g.fillRect(0, i*ymc+ymcc, sizeX(), ymc);
@@ -317,30 +322,27 @@ public class SeyprisMain extends JPanel{
 		
 		Dimension dim = getToolkit().getScreenSize();
 		if(fullScreen){
-			xPos = 1920;
-			yPos = 1080;
+			Rectangle ub = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+			xPos = ub.width;
+			yPos = ub.height;
 			
 			if(frameMenu != null){
 				frameMenu.resize();
 				frameMenu.isFullScreen(fs);
 			}
 			
-			qq = 1080.0/(double)dim.getHeight();
+			frame.setBounds(0, 0, sizeX(), sizeY());		
 			
-			frame.setBounds(0, 0, sizeX(), sizeY());
-			frame.setState(JFrame.NORMAL);
+			//frame.setState(JFrame.MAXIMIZED_BOTH);
 			frame.setBackground(null);
 		}else{
 			if(start){
-				xPos = 370;
-				yPos = 330;
+				xPos = 1900;
+				yPos = 900;
 			}else{
 				xPos = 1900;
 				yPos = 900;
 			}
-			
-			if(qq2>=1.89)//Is Java 1.9 or higher?
-				qq = (double)Toolkit.getDefaultToolkit().getScreenResolution()/96.0;//DPI rescaled
 			
 			if(frameMenu != null){
 				frameMenu.resize();
