@@ -333,8 +333,8 @@ public class SeyprisMain extends JPanel{
 			
 			frame.setBounds(0, 0, xPos, yPos);
 			
-			xPos*=qq;
-			yPos*=qq;
+			xPos = (int)(qq*xPos);
+			yPos = (int)(qq*yPos);
 			
 			//frame.setState(JFrame.MAXIMIZED_BOTH);
 			frame.setBackground(null);
