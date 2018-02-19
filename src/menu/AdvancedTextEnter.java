@@ -3,7 +3,7 @@ package menu;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public abstract class AdvancedTextEnterField implements KeyListener{
+public abstract class AdvancedTextEnter implements KeyListener{
 
 	public String text = "";
 	public int tebpos = 0;
@@ -15,7 +15,7 @@ public abstract class AdvancedTextEnterField implements KeyListener{
 	public static final int BUTTON_CTRL_SPACE = 0xfa;
 	public static final int BUTTON_ENTER = 0xff;
 	
-	public AdvancedTextEnterField() {
+	public AdvancedTextEnter() {
 		
 	}
 	
