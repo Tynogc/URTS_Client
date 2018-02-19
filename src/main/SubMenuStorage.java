@@ -24,7 +24,8 @@ public class SubMenuStorage {
 		menus[0] = em;
 		menus[1] = em;
 		menus[2] = em;
-		menus[3] = em;
+		menus[3] = new gui.sub.HostGame();
+		aditionalButtons[3] = new int[]{27,2};
 		
 		menus[9] = em;
 		menus[10] = em;

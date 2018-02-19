@@ -128,5 +128,9 @@ public class MenuControle {
 		if(menus != null)
 			menus.leftClickForFocus(x-menus.xPos, y-menus.yPos);
 	}
+	
+	public AbstractMenu getMenu() {
+		return menus;
+	}
 
 }

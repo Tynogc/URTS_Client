@@ -367,4 +367,16 @@ public class SeyprisMain extends JPanel{
 		if(startCredits != null)
 			startCredits.relocate();
 	}
+	
+	/**
+	 * Can be called to open the Lobby UI
+	 */
+	public static void enterLobby(lobby.LobbyControle l){
+		me.enterLobyIn(l);
+	}
+	
+	private void enterLobyIn(lobby.LobbyControle l){
+		overMenu.setVisible(false);
+		GuiControle.addMenu(new gui.sub.LobbyMenu(l, overMenu, gui.getSuperMenu()));
+	}
 }

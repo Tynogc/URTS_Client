@@ -1,3 +1,12 @@
+//Lobby
+4000: Lobby
+4001: Host
+4002: Client
+
+4010: Host on Server
+4011: Host as private Game
+4012: Pier-To-Pier
+
 //Menus
 11000: Ranked Ladder
 11001: Missions

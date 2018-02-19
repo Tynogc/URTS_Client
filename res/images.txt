@@ -103,3 +103,5 @@ res/ima/cli/spb/Ac.png
 res/ima/cli/spb/Af.png
 res/ima/cli/spb/Ad.png
 res/ima/cli/spb/Ad.png
+res/men/3s.png
+res/men/3s.png

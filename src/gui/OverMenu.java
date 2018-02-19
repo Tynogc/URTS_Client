@@ -53,7 +53,8 @@ public class OverMenu extends AbstractMenu{
 				}
 			};
 			add(sbm[i]);
-			sbm[i].fadeIn(-300);
+			if(i<=26)
+				sbm[i].fadeIn(-300);
 		}
 		locateButton();
 		relocate();
@@ -193,7 +194,7 @@ public class OverMenu extends AbstractMenu{
 			return;
 		for (int j = 0; j < sbm.length; j++) {
 			if(i != j){
-				if(sbm[j].isVisible() || stateIsMain)
+				if(sbm[j].isVisible())
 					sbm[j].fadeOut(-sbm[j].getxPos()/2-sbm[j].getyPos()/6+100);
 			}else{
 				mover = new ButtonMover(sbm[j], 340,  240, 500);

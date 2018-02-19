@@ -166,4 +166,8 @@ public class GuiControle {
 	public static void setSuperMenu(AbstractMenu m){
 		superMenu.setActivMenu(m);
 	}
+	
+	public AbstractMenu getSuperMenu() {
+		return superMenu.getMenu();
+	}
 }
