@@ -137,7 +137,7 @@ public class TCPclient implements Runnable{
 		}
 		
 		if(!isConnected)
-			isRunning = false;
+			setRunning(false);
 		
 		try {//Loop
 			while(isRunning()){
@@ -255,7 +255,7 @@ public class TCPclient implements Runnable{
 				//Check for close-command
 				if(s.startsWith(CLOSE_CONNECTION)){
 					status = "Connection Closed: "+s.substring(CLOSE_CONNECTION.length());
-					isRunning = false;
+					setRunning(false);
 				}else{
 					input.add(s);
 				}
@@ -343,6 +343,10 @@ public class TCPclient implements Runnable{
 	
 	public synchronized boolean isRunning() {
 		return isRunning;
+	}
+	
+	private synchronized void setRunning(boolean r){
+		isRunning = r;
 	}
 	
 	public RSAsaveKEY getOtherKey() {

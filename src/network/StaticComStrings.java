@@ -20,5 +20,7 @@ public class StaticComStrings {
 	public static final char TAGEND = '>';
 	public static final String TAG_ALL = "%ALL";
 	
+	public static final String WHO_IS_CONNECTED = "$CONS:";
+	
 	public static final String CLOSE_CONNECTION = "###CONNECTION_CLOSED###";
 }

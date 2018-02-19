@@ -22,6 +22,8 @@ public abstract class ConCentralNode extends ConnectionHandler{
 	protected List<TCPclient> connectedClients;
 	protected Semaphore sema;
 	
+	protected int hashCode;
+	
 	public ConCentralNode(String myName, RSAsaveKEY key) {
 		super(myName, key);
 		connectedClients = new ArrayList<>();
@@ -44,6 +46,19 @@ public abstract class ConCentralNode extends ConnectionHandler{
 		int i = 0;
 		for (TCPclient t : connectedClients) {
 			s[i] = t.getConnectionName();
+			i++;
+		}
+		sema.release();
+		return s;
+	}
+	
+	@Override
+	public String[] getUserNames() {
+		sema.acquireUninterruptibly();
+		String[] s = new String[connectedClients.size()];
+		int i = 0;
+		for (TCPclient t : connectedClients) {
+			s[i] = t.getOtherName();
 			i++;
 		}
 		sema.release();
@@ -94,18 +109,66 @@ public abstract class ConCentralNode extends ConnectionHandler{
 				if(to.matches(StaticComStrings.TAG_ALL)){
 					//Send to everyone
 					for (TCPclient t2 : connectedClients) {
-						if(t2.isConnected())
+						if(t2.isConnected() && t2 != t)
 							t2.send(sq.substring(u+1));//Remove To-Tag
 					}
+					recieved(sq);
 				}else if(!to.matches(t.getConnectionName())){
 					//Search for match and send
 					for (TCPclient t2 : connectedClients) {
 						if(to.matches(t2.getConnectionName()) && t2.isConnected())
 							t2.send(s);
 					}
+				}else{
+					recieved(sq);
 				}
+			}else{
+				recieved(s);
 			}
 		}
+	}
+	
+	/**
+	 * Must be called every time, there are changes to the connection<br>
+	 * IMPORTANT the Semaphore must not be aquired by the Thread calling this methode
+	 */
+	protected void updateHashCode(){
+		
+		String[] connections = getConnectionNames();
+		String[] conUserNames = getUserNames();
+		
+		if(conUserNames.length != connections.length){//Should never happen, just for safety
+			System.err.println("Lengths don't match (ConCentralNode.updateHashCode() )");
+			return;
+		}
+		
+		int hc = 0x1<<connections.length;
+		
+		for (int i = 0; i < conUserNames.length; i++) {
+			int u = 0;
+			for (int j = 0; j < conUserNames[i].length(); j++) {
+				u += conUserNames[i].charAt(j);
+			}
+			for (int j = 0; j < connections[i].length(); j++) {
+				u += connections[i].charAt(j);
+			}
+			
+			u = Integer.rotateLeft(u, i);
+			
+			hc += u;
+		}
+		
+		sema.acquireUninterruptibly();
+		hashCode = hc^connections.length;
+		sema.release();
+	}
+	
+	@Override
+	public int hashCode() {
+		sema.acquireUninterruptibly();
+		int h = hashCode;
+		sema.release();
+		return h;
 	}
 
 }
