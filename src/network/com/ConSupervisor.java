@@ -6,7 +6,7 @@ package network.com;
  */
 public abstract class ConSupervisor {
 
-	private ConnectionHandler ch;
+	protected ConnectionHandler ch;
 	
 	/**
 	 * Send Message to someone
@@ -29,5 +29,12 @@ public abstract class ConSupervisor {
 	 */
 	public void z_counterBind(ConnectionHandler c){
 		ch = c;
+	}
+	
+	/**
+	 * Calls the Update of the underlying Handler
+	 */
+	public void update(){
+		ch.update();
 	}
 }
