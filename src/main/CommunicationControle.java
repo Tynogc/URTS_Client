@@ -1,5 +1,6 @@
 package main;
 
+import crypto.RSAsaveKEY;
 import network.com.ConnectionHandler;
 
 /**
@@ -12,6 +13,27 @@ public class CommunicationControle {
 
 	private ConnectionHandler centralServer;
 	
-	private ConnectionHandler lobbyCon;
 	private ConnectionHandler gameCon;
+	
+	private final String name;
+	private final RSAsaveKEY key;
+	
+	public CommunicationControle(String n, RSAsaveKEY k){
+		name = n;
+		key = k;
+	}
+	
+	//////////////////////////////Start-Operations/////////////////////////////////
+	
+	public void openServer(int port){
+		
+	}
+	
+	public void connectClient(String ip, int port){
+		
+	}
+	
+	public void setSupervisorForGame(network.com.ConSupervisor c){
+		gameCon.bind(c);
+	}
 }
