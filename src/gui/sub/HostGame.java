@@ -77,7 +77,7 @@ public class HostGame extends UserMenu{
 	 * Starts a Pier to Pier Lobby
 	 */
 	private void startP2P(){
-		lobby.LobbyControle l = new lobby.LobbyControle();
+		lobby.LobbyControle l = new lobby.LobbyControle(true);
 		
 		SeyprisMain.enterLobby(l);
 	}
