@@ -17,6 +17,7 @@ public abstract class TextEnterButton extends DataFiled implements Destroyable{
 	public TextEnterButton(int x, int y, int wi, int hi, Color c, KeyListener k) {
 		super(x, y, wi, hi, c);
 		key = k;
+		setText("");
 	}
 
 	@Override

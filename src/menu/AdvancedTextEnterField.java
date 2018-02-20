@@ -18,6 +18,9 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	private boolean active;
 	private AdvancedTextEnter ate;
 	
+	private boolean disabled;
+	private boolean visible;
+	
 	public AdvancedTextEnterField(int x, int y, int xs) {
 		xPos = x;
 		yPos = y;
@@ -96,6 +99,28 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	 * @param id AdvancedTextEnter.BUTTON_
 	 */
 	protected abstract void specialKey(int id);
+	
+	protected boolean isMouseHere(int x, int y){
+		if(disabled)return false;
+		if(!visible)return false;
+		return x>=xPos&&y>=yPos&&x<=(xPos+xSize)&&y<=(yPos+ySize); 
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 
 	
 }
