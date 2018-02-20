@@ -14,6 +14,12 @@
 4012: Recommended
 4013: Pier-To-Pier
 
+4050: Unit Settings
+4051: Leave
+4052: Ready
+4053: Waiting for Players
+4054: START GAME!
+
 //Menus
 11000: Ranked Ladder
 11001: Missions
@@ -24,9 +30,9 @@
 11010: Players
 
 11018: Replays
-11019: Database
+11019: Maps
 11020: Mods
-11021: Documents
+11021: Database
 
 11008: Network
 11017: Server Log

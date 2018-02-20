@@ -4,7 +4,7 @@ package network.com;
  * Can be overwritten and bound to a ConnectionHandler
  * @author Sven T. Schneider
  */
-public abstract class ConSuperviser {
+public abstract class ConSupervisor {
 
 	private ConnectionHandler ch;
 	
