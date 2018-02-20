@@ -337,10 +337,6 @@ public abstract class Button implements ButtonInterface {
 	}
 	
 	public void paintYou(Graphics2D g){
-		if(rescaleText){
-			setTextOffset(g);
-			rescaleText = false;
-		}
 		Graphics2D g2d = g;
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		if(!visible){
@@ -365,6 +361,10 @@ public abstract class Button implements ButtonInterface {
 			}
 		}
 		g.setFont(font);
+		if(rescaleText){
+			setTextOffset(g);
+			rescaleText = false;
+		}
 		if(focused){
 			if(!icPaintSmooth(xPos-focusOffsetX, yPos-focusOffsetY, stateFoc, g)){
 			g.setColor(Color.blue);
