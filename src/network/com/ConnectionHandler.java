@@ -18,7 +18,7 @@ public abstract class ConnectionHandler {
 	
 	public final RSAsaveKEY myKey;
 	
-	private ConSupervisor connectionSuperviser;
+	private ConSuperviser connectionSuperviser;
 	
 	public ConnectionHandler(String myName, RSAsaveKEY key){
 		this.myName = myName;
@@ -69,7 +69,7 @@ public abstract class ConnectionHandler {
 	/**
 	 * Binds a ConSuperviser to this handler
 	 */
-	public void bind(ConSupervisor c){
+	public void bind(ConSuperviser c){
 		connectionSuperviser = c;
 		c.z_counterBind(this);
 	}

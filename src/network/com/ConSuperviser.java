@@ -4,9 +4,9 @@ package network.com;
  * Can be overwritten and bound to a ConnectionHandler
  * @author Sven T. Schneider
  */
-public abstract class ConSupervisor {
+public abstract class ConSuperviser {
 
-	protected ConnectionHandler ch;
+	private ConnectionHandler ch;
 	
 	/**
 	 * Send Message to someone
@@ -29,12 +29,5 @@ public abstract class ConSupervisor {
 	 */
 	public void z_counterBind(ConnectionHandler c){
 		ch = c;
-	}
-	
-	/**
-	 * Calls the Update of the underlying Handler
-	 */
-	public void update(){
-		ch.update();
 	}
 }

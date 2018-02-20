@@ -1,13 +1,10 @@
 package gui.sub;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import gui.SuperButtonMenu;
 import lobby.LobbyControle;
 import main.Language;
-import main.PicLoader;
 import main.SeyprisMain;
 import menu.AbstractMenu;
 import menu.Button;
@@ -26,11 +23,10 @@ public class LobbyMenu extends AbstractMenu{
 	private long timeIn;
 	private long timeOut;
 	
+	//////////Buttons
+	private Button exit;
+	
 	private SuperButtonMenu[] sbm;
-	
-	private BufferedImage[] imas;
-	
-	private boolean showReady;
 	
 	public LobbyMenu(LobbyControle l, gui.OverMenu o, AbstractMenu lm, main.GuiControle gc) {
 		super(340,40,10,10);
@@ -39,72 +35,28 @@ public class LobbyMenu extends AbstractMenu{
 		lastMenu = lm;
 		guiControle = gc;
 		
-		timeIn = System.currentTimeMillis();
-		
-		sbm = new SuperButtonMenu[6];
-		sbm[0] = new SuperButtonMenu(100, 0, 2);
-		sbm[0].setText(Language.lang.text(4000));
-		
-		if(controle.isHost()){
-			sbm[1] = new SuperButtonMenu(310, 0, 103){
-				@Override
-				public void paintYou(Graphics2D g) {
-					super.paintYou(g);
-					paintReady(g, xPos, yPos);
-				}
-				@Override
-				protected void isClicked() {
-					super.isClicked();
-					controle.readyClicked();
-				};
-			};
-			sbm[1].setText(Language.lang.text(4053));
-		}else{
-			sbm[1] = new SuperButtonMenu(310, 0, 103){
-				@Override
-				public void paintYou(Graphics2D g) {
-					super.paintYou(g);
-					paintReady(g, xPos, yPos);
-				}
-				@Override
-				protected void isClicked() {
-					super.isClicked();
-					controle.readyClicked();
-				};
-			};
-			sbm[1].setText(Language.lang.text(4052)+"?");
-			sbm[1].showBlue();
-		}
-		
-		sbm[2] = new SuperButtonMenu(520, 0, 19);
-		sbm[2].setText(Language.lang.text(11019));
-		
-		sbm[3] = new SuperButtonMenu(690, 0, 20);
-		sbm[3].setText(Language.lang.text(11020));
-		
-		sbm[4] = new SuperButtonMenu(860, 0, 104);
-		sbm[4].setText(Language.lang.text(4050));
-		
-		sbm[5] = new SuperButtonMenu(1070, 0, 102){
+		exit = new Button(400, 400, "res/ima/cli/G") {
+			@Override
+			protected void uppdate() {}
+			@Override
+			protected void isFocused() {}
 			@Override
 			protected void isClicked() {
-				super.isClicked();
 				closeYou();
 			}
 		};
-		sbm[5].showRed(true);
-		sbm[5].setText(Language.lang.text(4051)+" "+Language.lang.text(4000));
+		exit.setText("Exit Lobby");
+		add(exit);
+		timeIn = System.currentTimeMillis();
+		
+		sbm = new SuperButtonMenu[1];
+		sbm[0] = new SuperButtonMenu(0, 0, 2);
+		sbm[0].setText(Language.lang.text(4000));
 		
 		for (int i = 0; i < sbm.length; i++) {
 			add(sbm[i]);
 			sbm[i].setVisible(false);
 		}
-		
-		imas = new BufferedImage[]{
-			PicLoader.pic.getImage("res/ima/cli/spb/SuperButtonReady1.png"),
-			PicLoader.pic.getImage("res/ima/cli/spb/SuperButtonReady2.png"),
-			PicLoader.pic.getImage("res/ima/cli/spb/SuperButtonReady3.png")
-		};
 		
 		moveAble = false;
 		relocate();
@@ -114,7 +66,7 @@ public class LobbyMenu extends AbstractMenu{
 	protected void uppdateIntern() {
 		if(timeOut>10){
 			int t = (int)(System.currentTimeMillis()-timeOut);
-			if(t>2000){
+			if(t>1000){
 				overMenu.lock(false);
 				super.closeYou();
 				guiControle.setUserMenu(lastMenu);
@@ -134,24 +86,6 @@ public class LobbyMenu extends AbstractMenu{
 		
 		if(xSize != SeyprisMain.sizeX()-330 || ySize != SeyprisMain.sizeY()-40)
 			relocate();
-		
-		if(showReady != controle.isReady()){
-			showReady = controle.isReady();
-			if(controle.isHost()){
-				sbm[1].showBlue(showReady);
-				if(showReady){
-					sbm[1].setText(Language.lang.text(4054));
-				}else{
-					sbm[1].setText(Language.lang.text(4053));
-				}
-			}else{
-				if(showReady){
-					sbm[1].setText(Language.lang.text(4052)+"!");
-				}else{
-					sbm[1].setText(Language.lang.text(4052)+"?");
-				}
-			}
-		}
 	}
 	
 	private void relocate(){
@@ -159,29 +93,13 @@ public class LobbyMenu extends AbstractMenu{
 		ySize = SeyprisMain.sizeY()-40;
 		for (int i = 0; i < sbm.length; i++) {
 			sbm[i].setyPos(ySize-120);
+			sbm[i].setxPos(110+i*160);
 		}
 	}
 
 	@Override
 	protected void paintIntern(Graphics g) {
 		
-	}
-	
-	private void paintReady(Graphics2D g, int x, int y){
-		if(!showReady)
-			return;
-		if(controle.isHost()){
-			int u = (int)((System.currentTimeMillis()/10)%360);
-			for (int i = 0; i < 3; i++) {
-				int intens = (int)(Math.cos(Math.toRadians(u-i*120))*3.0+1.5);
-				for (int j = 0; j < intens; j++) {
-					g.drawImage(imas[1], x-10 +i*17, y+3, null);
-					g.drawImage(imas[2], x+133 -i*17, y+3, null);
-				}
-			}
-		}else{
-			g.drawImage(imas[0], x+50, y+6, null);
-		}
 	}
 
 	@Override

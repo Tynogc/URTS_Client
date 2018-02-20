@@ -115,13 +115,3 @@ res/ima/cli/Gc.png
 res/ima/cli/Gf.png
 res/ima/cli/Gd.png
 res/ima/cli/Gd.png
-res/men/102.png
-res/men/102.png
-res/men/103.png
-res/men/103.png
-res/men/104.png
-res/men/104.png
-res/ima/cli/spb/SuperButtonReady1.png
-res/ima/cli/spb/SuperButtonReady2.png
-res/ima/cli/spb/SuperButtonReady3.png
-res/ima/cli/spb/SuperButtonReady3.png

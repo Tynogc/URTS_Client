@@ -136,7 +136,7 @@ public class SeyprisMain extends JPanel{
 		
 		Fonts.createAllFonts();
 		
-		setFullScreen(false, false);
+		setFullScreen(false, true);
 		frameMenu = new FrameMenu(this);
 		
 		gui = new GuiControle(mouse, key);
@@ -165,6 +165,12 @@ public class SeyprisMain extends JPanel{
 		
 		//emots = new gui.utility.Emots();
 		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		secondPhase();
 	}
 	
@@ -174,7 +180,6 @@ public class SeyprisMain extends JPanel{
 		gui.setFrameMenu(frameMenu);
 		startCredits = new gui.CreditStarts();
 		GuiControle.addMenu(startCredits);
-		
 		
 		try {
 			Thread.sleep(4000);
@@ -202,7 +207,6 @@ public class SeyprisMain extends JPanel{
 		//TODO processConrole = new ProcessConrole();
 		
 		GuiControle.addMenu(new PerformanceMenu());
-		setFullScreen(true, false);
 		
 		//debFrame.setVisible(false);
 	}
@@ -356,7 +360,6 @@ public class SeyprisMain extends JPanel{
 			frame.setBounds(mX, mY, xPos, yPos);
 			frame.setBackground(topRun);
 			
-			System.out.println(xPos+" "+yPos);
 			back = new BufferedImage(xPos, yPos, BufferedImage.TYPE_INT_ARGB);
 		}
 		
