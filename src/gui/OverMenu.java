@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.EventCounter;
 import main.GuiControle;
@@ -32,6 +34,9 @@ public class OverMenu extends AbstractMenu{
 	private AbstractMenu activMenu;
 	
 	private static OverMenu ovm;
+	
+	private boolean locked = false;
+	private List<SuperButtonMenu> lockedButtonsFade;
 	
 	public OverMenu(GuiControle g, SubMenuStorage s) {
 		super(0,0,2000,600);
@@ -176,6 +181,8 @@ public class OverMenu extends AbstractMenu{
 	}
 	
 	private void buttonClickedMain(){
+		if(locked)
+			return;
 		timeToMain = System.currentTimeMillis()+1000;
 		for (int i = 0; i < sbm.length; i++) {
 			if(sbm[i].isVisible())
@@ -189,6 +196,8 @@ public class OverMenu extends AbstractMenu{
 	}
 	
 	private void buttonClicked(int i){
+		if(locked)
+			return;
 		activMenu = sms.getMenu(i);
 		if(activMenu == null)
 			return;
@@ -225,6 +234,34 @@ public class OverMenu extends AbstractMenu{
 	public static void mainClickedStatic(){
 		if(ovm != null)
 			ovm.buttonClickedMain();
+	}
+	
+	/**
+	 * redirect from setVisible, more "beautiful" effect :D
+	 */
+	public void lock(boolean l){
+		locked = l;
+		if(lockedButtonsFade == null)
+			lockedButtonsFade = new ArrayList<>();
+		
+		if(l){
+			singleLock(mainMenu);
+			for (int i = 0; i < sbm.length; i++) {
+				singleLock(sbm[i]);
+			}
+		}else{
+			while(!lockedButtonsFade.isEmpty()){
+				SuperButtonMenu s = lockedButtonsFade.remove(0);
+				s.fadeIn(-s.getxPos()/2-s.getyPos()/6+100);
+			}
+		}
+	}
+	
+	private void singleLock(SuperButtonMenu s){
+		if(!s.isVisible() && !s.isFading())
+			return;
+		s.fadeOut(-s.getxPos()/2-s.getyPos()/6+100);
+		lockedButtonsFade.add(s);
 	}
 
 }

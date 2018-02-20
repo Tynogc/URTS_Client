@@ -2,8 +2,9 @@ package gui.sub;
 
 import java.awt.Graphics;
 
+import gui.SuperButtonMenu;
 import lobby.LobbyControle;
-import main.GuiControle;
+import main.Language;
 import main.SeyprisMain;
 import menu.AbstractMenu;
 import menu.Button;
@@ -17,15 +18,22 @@ public class LobbyMenu extends AbstractMenu{
 	 */
 	private final gui.OverMenu overMenu;
 	private final AbstractMenu lastMenu;
+	private final main.GuiControle guiControle;
+	
+	private long timeIn;
+	private long timeOut;
 	
 	//////////Buttons
 	private Button exit;
 	
-	public LobbyMenu(LobbyControle l, gui.OverMenu o, AbstractMenu lm) {
-		super(300,40,SeyprisMain.sizeX()-330, SeyprisMain.sizeY()-40);
+	private SuperButtonMenu[] sbm;
+	
+	public LobbyMenu(LobbyControle l, gui.OverMenu o, AbstractMenu lm, main.GuiControle gc) {
+		super(340,40,10,10);
 		controle = l;
 		overMenu = o;
 		lastMenu = lm;
+		guiControle = gc;
 		
 		exit = new Button(400, 400, "res/ima/cli/G") {
 			@Override
@@ -39,11 +47,54 @@ public class LobbyMenu extends AbstractMenu{
 		};
 		exit.setText("Exit Lobby");
 		add(exit);
+		timeIn = System.currentTimeMillis();
+		
+		sbm = new SuperButtonMenu[1];
+		sbm[0] = new SuperButtonMenu(0, 0, 2);
+		sbm[0].setText(Language.lang.text(4000));
+		
+		for (int i = 0; i < sbm.length; i++) {
+			add(sbm[i]);
+			sbm[i].setVisible(false);
+		}
+		
+		moveAble = false;
+		relocate();
 	}
 
 	@Override
 	protected void uppdateIntern() {
+		if(timeOut>10){
+			int t = (int)(System.currentTimeMillis()-timeOut);
+			if(t>1000){
+				overMenu.lock(false);
+				super.closeYou();
+				guiControle.setUserMenu(lastMenu);
+				timeOut = 0;
+			}
+		}
 		
+		if(timeIn>10){
+			int t = (int)(System.currentTimeMillis()-timeIn);
+			if(t>1000){
+				for (int i = 0; i < sbm.length; i++) {
+					sbm[i].fadeIn(-sbm[i].getxPos()/2-sbm[i].getyPos()/6+100);
+				}
+				timeIn = 0;
+			}
+		}
+		
+		if(xSize != SeyprisMain.sizeX()-330 || ySize != SeyprisMain.sizeY()-40)
+			relocate();
+	}
+	
+	private void relocate(){
+		xSize = SeyprisMain.sizeX()-330;
+		ySize = SeyprisMain.sizeY()-40;
+		for (int i = 0; i < sbm.length; i++) {
+			sbm[i].setyPos(ySize-120);
+			sbm[i].setxPos(110+i*160);
+		}
 	}
 
 	@Override
@@ -53,8 +104,10 @@ public class LobbyMenu extends AbstractMenu{
 
 	@Override
 	public void closeYou() {
-		overMenu.setVisible(true);
-		GuiControle.setSuperMenu(lastMenu);
-		super.closeYou();
+		if(timeOut<10)
+			timeOut = System.currentTimeMillis();
+		for (int i = 0; i < sbm.length; i++) {
+			sbm[i].fadeOut(-sbm[i].getxPos()/2-sbm[i].getyPos()/6+100);
+		}
 	}
 }

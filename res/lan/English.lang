@@ -1,11 +1,18 @@
+//Networking general
+100: IP
+101: Port
+
 //Lobby
 4000: Lobby
 4001: Host
 4002: Client
+4003: $$$4001$$$ Game
+4004: (P2P)
 
 4010: Host on Server
 4011: Host as private Game
-4012: Pier-To-Pier
+4012: Recommended
+4013: Pier-To-Pier
 
 //Menus
 11000: Ranked Ladder

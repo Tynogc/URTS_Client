@@ -3,6 +3,7 @@ package main;
 import gui.FrameMenu;
 import gui.OverMenu;
 import gui.PerformanceMenu;
+import menu.AbstractMenu;
 import utility.UniversalActionListener;
 
 import java.awt.Color;
@@ -376,7 +377,7 @@ public class SeyprisMain extends JPanel{
 	}
 	
 	private void enterLobyIn(lobby.LobbyControle l){
-		overMenu.setVisible(false);
-		GuiControle.addMenu(new gui.sub.LobbyMenu(l, overMenu, gui.getSuperMenu()));
+		overMenu.lock(true);
+		gui.setUserMenu(new gui.sub.LobbyMenu(l, overMenu, gui.getUserMenu(), gui));
 	}
 }

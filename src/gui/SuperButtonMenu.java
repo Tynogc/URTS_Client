@@ -15,6 +15,7 @@ public class SuperButtonMenu extends Button{
 	private BufferedImage backBlack;
 	private BufferedImage backBlue;
 	private boolean showBlue;
+	private boolean showRed;
 	private BufferedImage backRed;
 	private BufferedImage backYellow;
 	
@@ -131,7 +132,8 @@ public class SuperButtonMenu extends Button{
 		}
 		
 		if(alarm.alarmStatus == utility.AlarmValue.ALL_ALARM ||
-				(alarm.alarmStatus == utility.AlarmValue.ALL_ALARM_AKUT && System.currentTimeMillis()%1000<500)){
+				(alarm.alarmStatus == utility.AlarmValue.ALL_ALARM_AKUT && System.currentTimeMillis()%1000<500) || 
+				showRed){
 			g.drawImage(backRed, xPos, yPos, null);
 		}else if(alarm.alarmStatus == utility.AlarmValue.ALL_WARN){
 			g.drawImage(backYellow, xPos, yPos, null);
@@ -232,6 +234,10 @@ public class SuperButtonMenu extends Button{
 		fadeCounter = System.currentTimeMillis()-t;
 	}
 	
+	public boolean isFading(){
+		return fadeIn || fadeOut;
+	}
+	
 	public void dontFade(){
 		fadeIn = false;
 		fadeOut = false;
@@ -239,6 +245,12 @@ public class SuperButtonMenu extends Button{
 	
 	public void showBlue(){
 		showBlue = true;
+	}
+	public void showRed(boolean b){
+		showRed = b;
+	}
+	public void showBlue(boolean b){
+		showBlue = b;
 	}
 	
 	public void setBackPic(boolean b){

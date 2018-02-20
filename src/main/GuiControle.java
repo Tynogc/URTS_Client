@@ -167,7 +167,7 @@ public class GuiControle {
 		superMenu.setActivMenu(m);
 	}
 	
-	public AbstractMenu getSuperMenu() {
-		return superMenu.getMenu();
+	public AbstractMenu getUserMenu() {
+		return userMenu.getMenu();
 	}
 }
