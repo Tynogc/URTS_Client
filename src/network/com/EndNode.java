@@ -87,14 +87,14 @@ public class EndNode extends ConnectionHandler {
 	}
 
 	@Override
-	public void connect(String ip, int port) {
-		//TODO
-	}
-
-	@Override
-	public void connect(InetAddress adress, int port) {
-		// TODO Auto-generated method stub
-
+	public void addClient(TCPclient c) throws IllegalStateException {
+		sema.acquireUninterruptibly();
+		if(tcp != null){//Already occupied
+			sema.release();
+			throw new IllegalStateException("Client already Occupied!");
+		}
+		tcp = c;
+		sema.release();
 	}
 
 	@Override
@@ -148,4 +148,11 @@ public class EndNode extends ConnectionHandler {
 		return hashCode;
 	}
 
+	@Override
+	public void disconnect() {
+		sema.acquireUninterruptibly();
+		if(tcp != null)
+			tcp.closeConnection("Disconnected");
+		sema.release();
+	}
 }

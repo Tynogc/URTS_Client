@@ -75,6 +75,9 @@ public class SeyprisMain extends JPanel{
 	public static final String TITLE = "URTS-Launcher v"+VERSION;
 	
 	private RSAsaveKEY myKey;
+	private String myName = "EMPTY";
+	
+	public CommunicationControle com;
 	
 	private static SeyprisMain me;
 	
@@ -189,6 +192,8 @@ public class SeyprisMain extends JPanel{
 		} catch (Exception e1) {
 			debug.Debug.printExeption(e1);
 		}
+		
+		com = new CommunicationControle(myName, myKey);
 		
 		sms = new SubMenuStorage();
 		
@@ -376,5 +381,9 @@ public class SeyprisMain extends JPanel{
 	private void enterLobyIn(lobby.LobbyControle l){
 		overMenu.lock(true);
 		gui.setUserMenu(new gui.sub.LobbyMenu(l, overMenu, gui.getUserMenu(), gui));
+	}
+	
+	public static CommunicationControle getCom(){
+		return me.com;
 	}
 }

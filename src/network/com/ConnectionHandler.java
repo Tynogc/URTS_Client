@@ -1,9 +1,7 @@
 package network.com;
 
-import java.net.InetAddress;
-import java.util.concurrent.TimeoutException;
-
 import network.StaticComStrings;
+import network.TCPclient;
 import crypto.RSAsaveKEY;
 
 /**
@@ -41,16 +39,10 @@ public abstract class ConnectionHandler {
 	public abstract String[] getUserNames();
 	
 	/**
-	 * Should invoke a connection-method connecting to the specified address
-	 * @throws TimeoutException if the max. connection-time is over
+	 * Add a connected TCPclient to the Processing.
+	 * @throws IllegalStateException if all spaces are occupied
 	 */
-	public abstract void connect(String ip, int port) throws TimeoutException;
-	
-	/**
-	 * Should invoke a connection-method connecting to the specified address
-	 * @throws TimeoutException if the max. connection-time is over
-	 */
-	public abstract void connect(InetAddress adress, int port);
+	public abstract void addClient(TCPclient c) throws IllegalStateException;
 	
 	/**
 	 * Should process one Input from every connected TCP-Client/All incoming messages if only one TCP-Client
@@ -92,4 +84,9 @@ public abstract class ConnectionHandler {
 		}
 		connectionSuperviser.recieve(s, f);
 	}
+	
+	/**
+	 * Should close all Connections from/to this Handler
+	 */
+	public abstract void disconnect();
 }

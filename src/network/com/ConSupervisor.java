@@ -37,4 +37,11 @@ public abstract class ConSupervisor {
 	public void update(){
 		ch.update();
 	}
+	
+	/**
+	 * @return true if successfully bound to an Connection-Handler
+	 */
+	public boolean isBound(){
+		return ch != null;
+	}
 }

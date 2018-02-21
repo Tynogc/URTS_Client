@@ -1,7 +1,11 @@
 package menu;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import main.Fonts;
+import main.KeyListener;
 
 public abstract class AdvancedTextEnterField implements ButtonInterface{
 
@@ -18,8 +22,11 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	private boolean active;
 	private AdvancedTextEnter ate;
 	
+	private Color col = new Color(100,100,100,50);
+	private Color textCol = Color.white;
+	
 	private boolean disabled;
-	private boolean visible;
+	private boolean visible = true;
 	
 	public AdvancedTextEnterField(int x, int y, int xs) {
 		xPos = x;
@@ -50,6 +57,17 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	@Override
 	public void leftClicked(int x, int y) {
 		next.leftClicked(x, y);
+		if(isMouseHere(x, y)){
+			if(!active){
+				active = true;
+				KeyListener.forwardKey = ate;
+			}
+		}else{
+			if(active){
+				active = false;
+				KeyListener.forwardKey = null;
+			}
+		}
 	}
 
 	@Override
@@ -74,6 +92,27 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	public void paintYou(Graphics2D g) {
 		next.paintYou(g);
 		
+		if(!isVisible())
+			return;
+		
+		g.setColor(col);
+		g.fillRect(xPos, yPos, xSize, ySize);
+		g.setColor(DataFiled.l1);
+		g.drawRect(xPos, yPos, xSize, ySize);
+		g.setColor(DataFiled.l2);
+		g.drawRect(xPos+1, yPos+1, xSize-2, ySize-2);
+		g.setColor(DataFiled.l3);
+		g.drawLine(xPos+2, yPos+2, xPos+xSize-2, yPos+2);
+		g.drawLine(xPos+xSize-2, yPos+3, xPos+xSize-2, yPos+ySize-2);
+		
+		g.setFont(Fonts.font14);
+		g.setColor(textCol);
+		g.drawString(ate.text, 10+xPos, 15+yPos);
+		
+		if(active && System.currentTimeMillis()%1000>500){
+			int p = g.getFontMetrics().stringWidth(ate.text.substring(0, ate.tebpos));
+			g.drawRect(xPos+p+11, yPos+4, 1, 14);
+		}
 	}
 
 	@Override
@@ -122,5 +161,21 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 		this.visible = visible;
 	}
 
+	public void setColor(Color col) {
+		this.col = col;
+	}
 	
+	public void setTextColor(Color textCol) {
+		this.textCol = textCol;
+	}
+	
+	public String getText(){
+		return ate.text;
+	}
+	
+	public void setText(String t){
+		ate.text = t;
+		if(ate.tebpos > t.length())
+			ate.tebpos = t.length();
+	}
 }

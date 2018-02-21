@@ -32,18 +32,6 @@ public class ConServer extends ConCentralNode{
 		server = new TCPserver(port, myName, myKey);
 	}
 
-	/**
-	 * This Method is undefined for Servers and will just do nothing :D
-	 */
-	@Override
-	public void connect(String ip, int port) {}
-
-	/**
-	 * This Method is undefined for Servers and will just do nothing :D
-	 */
-	@Override
-	public void connect(InetAddress adress, int port) {}
-
 	@Override
 	public void update() {
 		if(server.hasNew()){//Add new connection to the List
@@ -67,4 +55,9 @@ public class ConServer extends ConCentralNode{
 		super.update();
 	}
 
+	@Override
+	public void disconnect() {
+		server.closeServer();
+		super.disconnect();
+	}
 }

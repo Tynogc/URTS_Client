@@ -42,7 +42,7 @@ public class HostGame extends UserMenu{
 			@Override
 			protected void textEntered(String text) {}
 		};
-		tebP2P.setText("6103");//TODO default port
+		tebP2P.setText("6102");//TODO default port
 		hostP2P.addInContainer(tebP2P);
 		Button b1 = new Button(20, 60, "res/ima/cli/B") {
 			@Override
@@ -77,7 +77,17 @@ public class HostGame extends UserMenu{
 	 * Starts a Pier to Pier Lobby
 	 */
 	private void startP2P(){
+		int port = 0;
+		try {
+			port = Integer.parseInt(tebP2P.getText());
+			tebP2P.setColor(Color.black);
+		} catch (Exception e) {
+			tebP2P.setColor(Color.red);
+			return;
+		}
 		lobby.LobbyControle l = new lobby.LobbyControle(true);
+		
+		SeyprisMain.getCom().newCon_openServer(port);
 		
 		SeyprisMain.enterLobby(l);
 	}

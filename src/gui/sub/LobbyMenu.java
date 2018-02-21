@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import gui.SuperButtonMenu;
+import lobby.ChatContainer;
 import lobby.LobbyControle;
 import main.Language;
 import main.PicLoader;
@@ -31,6 +32,8 @@ public class LobbyMenu extends AbstractMenu{
 	private BufferedImage[] imas;
 	
 	private boolean showReady;
+	
+	private ChatContainer chat;
 	
 	public LobbyMenu(LobbyControle l, gui.OverMenu o, AbstractMenu lm, main.GuiControle gc) {
 		super(340,40,10,10);
@@ -106,6 +109,10 @@ public class LobbyMenu extends AbstractMenu{
 			PicLoader.pic.getImage("res/ima/cli/spb/SuperButtonReady3.png")
 		};
 		
+		chat = new ChatContainer(300, 300);
+		add(chat);
+		controle.setChat(chat);
+		
 		moveAble = false;
 		relocate();
 	}
@@ -151,6 +158,10 @@ public class LobbyMenu extends AbstractMenu{
 					sbm[1].setText(Language.lang.text(4052)+"?");
 				}
 			}
+		}
+		
+		if(!controle.isBound()){
+			SeyprisMain.getCom().setSupervisorForGame(controle);
 		}
 	}
 	

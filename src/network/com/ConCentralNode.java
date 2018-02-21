@@ -14,7 +14,7 @@ import network.TCPclient;
  * a PierToPier-Host
  * @author Sven T. Schneider
  */
-public abstract class ConCentralNode extends ConnectionHandler{
+public class ConCentralNode extends ConnectionHandler{
 
 	/**
 	 * A List of all connected Clients. ATTENTION must always acquire the Semaphore before modifying 
@@ -65,6 +65,12 @@ public abstract class ConCentralNode extends ConnectionHandler{
 		return s;
 	}
 	
+	@Override
+	public void addClient(TCPclient c) {
+		sema.acquireUninterruptibly();
+		connectedClients.add(c);
+		sema.release();
+	}
 
 	@Override
 	public void sendTo(String s, String who) {
@@ -169,6 +175,15 @@ public abstract class ConCentralNode extends ConnectionHandler{
 		int h = hashCode;
 		sema.release();
 		return h;
+	}
+	
+	@Override
+	public void disconnect() {
+		sema.acquireUninterruptibly();
+		for (TCPclient t : connectedClients) {
+			t.closeConnection("Server Closed");
+		}
+		sema.release();
 	}
 
 }

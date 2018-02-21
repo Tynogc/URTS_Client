@@ -13,7 +13,7 @@ public abstract class DataFiled extends Button{
 	
 	public static final Color l1 = new Color(120,120,120);
 	public static final Color l2 = new Color(70,70,70);
-	private static final Color l3 = new Color(0,0,0,100);
+	public static final Color l3 = new Color(0,0,0,100);
 	
 	private boolean blinking = false;
 	
