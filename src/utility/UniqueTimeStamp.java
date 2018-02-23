@@ -53,6 +53,6 @@ public class UniqueTimeStamp {
 		if(full)
 			return Long.toString(s, radix);
 		else
-			return Long.toString(s%0xffffffffl, radix);
+			return Long.toString(Math.abs(s%0xffffffffl), radix);
 	}
 }

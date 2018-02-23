@@ -7,7 +7,6 @@ import gui.UserMenu;
 import main.Fonts;
 import main.Language;
 import main.SeyprisMain;
-import menu.AdvancedTextEnterField;
 import menu.Button;
 import menu.GroupContainer;
 import menu.Painter;
@@ -80,13 +79,14 @@ public class HostGame extends UserMenu{
 		int port = 0;
 		try {
 			port = Integer.parseInt(tebP2P.getText());
-			tebP2P.setColor(Color.black);
+			tebP2P.setTextColor(Color.black);
 		} catch (Exception e) {
-			tebP2P.setColor(Color.red);
+			tebP2P.setTextColor(Color.red);
 			return;
 		}
 		lobby.LobbyControle l = new lobby.LobbyControle(true);
 		
+		SeyprisMain.getCom().clearGameConnection();
 		SeyprisMain.getCom().newCon_openServer(port);
 		
 		SeyprisMain.enterLobby(l);

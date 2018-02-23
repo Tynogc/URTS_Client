@@ -22,8 +22,8 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	private boolean active;
 	private AdvancedTextEnter ate;
 	
-	private Color col = new Color(100,100,100,50);
-	private Color textCol = Color.white;
+	private Color col = Color.white;
+	private Color textCol = Color.black;
 	
 	private boolean disabled;
 	private boolean visible = true;
@@ -175,7 +175,6 @@ public abstract class AdvancedTextEnterField implements ButtonInterface{
 	
 	public void setText(String t){
 		ate.text = t;
-		if(ate.tebpos > t.length())
-			ate.tebpos = t.length();
+		ate.tebpos = t.length();
 	}
 }

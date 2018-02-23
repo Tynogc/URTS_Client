@@ -28,6 +28,8 @@ public abstract class ConnectionThread implements Runnable{
 		this.ip = ip;
 		this.port = port;
 		
+		isRunning = true;
+		
 		new Thread(this, "Connection-Init to "+ip).start();
 	}
 	
@@ -36,16 +38,19 @@ public abstract class ConnectionThread implements Runnable{
 		try {
 			Socket s = new Socket();
 			s.connect(new InetSocketAddress(ip, port), 5000);
-			
+			callDone(s);
+			setRunning(false);
 		} catch (IOException e) {
 			debug.Debug.println("*Cant connect to "+ip, debug.Debug.WARN);
 			debug.Debug.println(e.toString(), debug.Debug.SUBWARN);
 		}
 	}
 	
-	private synchronized void callDone(Socket c){
+	private synchronized void callDone(Socket c) throws IOException{
 		if(!stop)
 			done(c);
+		else
+			c.close();
 	}
 	
 	/**

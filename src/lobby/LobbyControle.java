@@ -7,12 +7,27 @@ public class LobbyControle extends network.com.ConSupervisor{
 	
 	private ChatContainer chat;
 	
+	private static final String STR_CHAT = "#CHAT";
+	
 	public LobbyControle(boolean host){
 		isHost = host;
 	}
 	
+	/**
+	 * Sends a Chat-Message
+	 * @param s the Chat-Message
+	 */
+	private void chatSend(String s){
+		send(STR_CHAT+s, null);
+	}
+	
 	public void setChat(ChatContainer c){
 		chat = c;
+		chat.setSend(new network.Writable(){
+			public void write(String s){
+				chatSend(s);
+			}
+		});
 	}
 	
 	public void readyClicked(){
@@ -29,6 +44,8 @@ public class LobbyControle extends network.com.ConSupervisor{
 
 	@Override
 	public void recieve(String s, String from) {
-		System.out.println("Recived: >"+s+"< "+from);
+		if(s.startsWith(STR_CHAT)){
+			
+		}
 	}
 }

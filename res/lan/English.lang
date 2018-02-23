@@ -1,3 +1,7 @@
+1: Yes
+2: No
+3: Cancel
+
 //Networking general
 100: IP
 101: Port
@@ -8,11 +12,14 @@
 4002: Client
 4003: $$$4001$$$ Game
 4004: (P2P)
+4005: Connecting
+4006: Join
 
 4010: Host on Server
 4011: Host as private Game
 4012: Recommended
 4013: Pier-To-Pier
+4014: Join Private Game
 
 4050: Unit Settings
 4051: Leave

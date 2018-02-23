@@ -125,3 +125,11 @@ res/ima/cli/spb/SuperButtonReady1.png
 res/ima/cli/spb/SuperButtonReady2.png
 res/ima/cli/spb/SuperButtonReady3.png
 res/ima/cli/spb/SuperButtonReady3.png
+res/ima/mbe/m400x200.png
+res/ima/cli/Xn.png
+res/ima/cli/Xc.png
+res/ima/cli/Xf.png
+res/ima/cli/Xd.png
+res/ima/cli/Xd.png
+res/men/2s.png
+res/men/2s.png

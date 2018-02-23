@@ -80,7 +80,7 @@ public abstract class ConnectionHandler {
 			s = s.substring(u+StaticComStrings.TAG_FROM.length());
 			u = s.indexOf(StaticComStrings.TAGEND);
 			f = s.substring(0, u);
-			s = s.substring(u);
+			s = s.substring(u+1);
 		}
 		connectionSuperviser.recieve(s, f);
 	}

@@ -386,4 +386,8 @@ public class SeyprisMain extends JPanel{
 	public static CommunicationControle getCom(){
 		return me.com;
 	}
+	
+	public static String getMyName(){
+		return me.myName;
+	}
 }

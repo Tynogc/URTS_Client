@@ -57,6 +57,10 @@ public class TCPserver extends Thread {
 		handler = new ServerHandler();
 		myKey = key;
 		myName = name;
+		
+		start();
+		debug.Debug.println("Server on Port "+port);
+		debug.Debug.print(" OPEN", debug.Debug.MESSAGE);
 	}
 
 	@Override
