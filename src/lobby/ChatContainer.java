@@ -52,12 +52,12 @@ public class ChatContainer extends Container{
 		
 		int size = 14;
 		try {
-			fontN = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSerif.ttf"));
+			fontN = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSans.ttf"));
 			fontN = fontN.deriveFont((float) size);
-			fontI = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSerifItalic.ttf"));
+			fontI = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSansOblique.ttf"));
 			fontI = fontI.deriveFont((float) size);
-			fontB = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSerifBold.ttf"));
-			fontB = fontB.deriveFont((float) (size+1));
+			fontB = Font.createFont(Font.TRUETYPE_FONT, new File("res/font/FreeSansBold.ttf"));
+			fontB = fontB.deriveFont((float) size);
 		} catch (Exception e) {
 			fontN = new Font(Font.MONOSPACED, Font.PLAIN, size);
 			fontI = new Font(Font.MONOSPACED, Font.PLAIN, size);
