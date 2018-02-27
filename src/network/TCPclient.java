@@ -176,16 +176,12 @@ public class TCPclient implements Runnable{
 		//***Exchange Connection-Name
 		s = NULL;
 		if(connectionName != null) s = connectionName;//If this side provides a Connection-Name send it
-		outStream.println(s);//Important: Only one of the Connection-Partners must send a name,
-				//the other partner has to send NULL
+		outStream.println(s);
 		while(!inStream.hasNext())
 			Thread.sleep(10);
 		s = inStream.nextLine();
 		if(s.compareTo(NULL) == 0 && connectionName == null)//Both null
 			throw new IllegalStateException("Both sides have not declared a Connection-Name!");
-		if(s.compareTo(NULL) != 0 && connectionName != null)//Both not null
-			if(s.compareTo(connectionName) != 0) //Are they different?
-				throw new IllegalStateException("Both sides declared different Connection-Name!");
 		if(connectionName == null)//All OK set conName if not already set.
 			connectionName = s;
 		
@@ -219,7 +215,6 @@ public class TCPclient implements Runnable{
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(myName.getBytes());
 		md.update(myKey.getPublicKeyString().getBytes());
-		md.update(connectionName.getBytes());
 		mem = linearCrypto.encrypt(md.digest(), 0); //Encrypt digested Hash
 		outStream.println(Base64.getEncoder().encodeToString(mem));
 		while(!inStream.hasNext())
@@ -228,7 +223,6 @@ public class TCPclient implements Runnable{
 		md.reset(); // And compute hash to compare...
 		md.update(otherName.getBytes());
 		md.update(otherKey.getPublicKeyString().getBytes());
-		md.update(connectionName.getBytes());
 		
 		//Compare the Hashes
 		if(!MessageDigest.isEqual(md.digest(), linearCrypto.decrypt(Base64.getDecoder().decode(s), 0))){

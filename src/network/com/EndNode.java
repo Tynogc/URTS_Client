@@ -64,7 +64,6 @@ public class EndNode extends ConnectionHandler {
 			connections[i] = st[i*2];
 			conUserNames[i] = st[i*2+1];
 		}
-		
 		//Update Hash-Code//////////////////////////////
 		
 		hashCode = 0x1<<connections.length;

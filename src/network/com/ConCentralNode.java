@@ -24,10 +24,13 @@ public class ConCentralNode extends ConnectionHandler{
 	
 	protected int hashCode;
 	
+	public final String myAdress;
+	
 	public ConCentralNode(String myName, RSAsaveKEY key) {
 		super(myName, key);
 		connectedClients = new ArrayList<>();
 		sema = new Semaphore(1);
+		myAdress = utility.UniqueTimeStamp.getTimeStamp(false, 36);
 	}
 	
 
@@ -70,6 +73,19 @@ public class ConCentralNode extends ConnectionHandler{
 		sema.acquireUninterruptibly();
 		connectedClients.add(c);
 		sema.release();
+		//Update Hashcode
+		updateHashCode();		
+		//Send Connection-Update to clients
+		String[] s1 = getConnectionNames();
+		String[] s2 = getUserNames();
+		String ts = StaticComStrings.WHO_IS_CONNECTED;
+		ts += myAdress+StaticComStrings.DIV+myName;
+		for (int i = 0; i < s1.length; i++) {
+			ts += StaticComStrings.DIV+s1[i]+StaticComStrings.DIV+s2[i];
+		}
+		for (TCPclient t : connectedClients) {
+			t.send(ts);
+		}
 	}
 
 	@Override
@@ -85,7 +101,7 @@ public class ConCentralNode extends ConnectionHandler{
 		for (TCPclient t : connectedClients) {
 			if(t.getConnectionName().startsWith(who)){
 				if(t.isConnected()) //Send String and Frome-Tag
-					t.send(to+StaticComStrings.TAG_FROM+t.getConnectionName()+StaticComStrings.TAGEND+s);
+					t.send(to+StaticComStrings.TAG_FROM+myAdress+StaticComStrings.TAGEND+s);
 			}
 		}
 	}
@@ -125,8 +141,10 @@ public class ConCentralNode extends ConnectionHandler{
 						if(to.matches(t2.getConnectionName()) && t2.isConnected())
 							t2.send(s);
 					}
-				}else{
+				}else if(to.matches(myAdress)){
 					recieved(sq);
+				}else{
+					debug.Debug.println("Unable to forward Msg. to: "+to);
 				}
 			}else{
 				recieved(s);
@@ -136,7 +154,7 @@ public class ConCentralNode extends ConnectionHandler{
 	
 	/**
 	 * Must be called every time, there are changes to the connection<br>
-	 * IMPORTANT the Semaphore must not be aquired by the Thread calling this methode
+	 * IMPORTANT the Semaphore must not be acquired by the Thread calling this method
 	 */
 	protected void updateHashCode(){
 		

@@ -35,22 +35,7 @@ public class ConServer extends ConCentralNode{
 	@Override
 	public void update() {
 		if(server.hasNew()){//Add new connection to the List
-			sema.acquireUninterruptibly();
-			connectedClients.add(server.getNewlyConnected());
-			sema.release();
-			//Update Hashcode
-			updateHashCode();		
-			//Send Connection-Update to clients
-			String[] s1 = getConnectionNames();
-			String[] s2 = getUserNames();
-			String ts = StaticComStrings.WHO_IS_CONNECTED;
-			for (int i = 0; i < s1.length; i++) {
-				if(i != 0)
-					ts += StaticComStrings.DIV;
-				
-				ts += s1[i]+StaticComStrings.DIV+s2[i];
-			}
-			sendTo(ts, null);
+			addClient(server.getNewlyConnected());
 		}
 		super.update();
 	}
