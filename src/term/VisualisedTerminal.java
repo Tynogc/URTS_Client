@@ -75,6 +75,8 @@ public class VisualisedTerminal implements TermPrint{
 	@Override
 	public void println(String s, int color) {
 		nextLine();
+		if(s.length()<1)
+			return;
 		String[] st = s.split(Transmitter.HEADER);
 		String pre;
 		String text;

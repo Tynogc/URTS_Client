@@ -27,6 +27,9 @@
 4053: Waiting for Players
 4054: START GAME!
 
+4100: Connection to $#$ acquired!
+4101: $#$ disconnected!
+
 //Menus
 11000: Ranked Ladder
 11001: Missions

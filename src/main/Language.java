@@ -59,6 +59,10 @@ public class Language {
 		lang = this;
 	}
 	
+	/**
+	 * @param id text ID as saved in the Language-File
+	 * @return the Text at the specified position
+	 */
 	public String text(int id){
 		LanguageText l = first;
 		while(l != null){
@@ -68,6 +72,21 @@ public class Language {
 		}
 		debug.Debug.println("*ERROR Language: ID not found "+id, debug.Debug.ERROR);
 		return "";
+	}
+	
+	/**
+	 * Parametric texts contain <b>$#$</b>. This will be replaced with the String p.
+	 * @param p replacement for generic $#$
+	 * @param id text ID as saved in the Language-File
+	 * @return the Text at the specified position
+	 */
+	public String parametricText(String p, int id){
+		String[] q = text(id).split("\\$#\\$");
+		if(q.length<2){
+			debug.Debug.println("*ERROR Language: "+id+" isn't a parametric String!", debug.Debug.ERROR);
+			return q[0]+p;
+		}
+		return q[0]+p+q[1];
 	}
 }
 

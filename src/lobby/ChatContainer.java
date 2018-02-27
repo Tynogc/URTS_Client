@@ -8,9 +8,6 @@ import java.awt.Graphics2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import main.Fonts;
-import main.SeyprisMain;
 import menu.AdvancedTextEnterField;
 import menu.Container;
 import network.Writable;
@@ -41,7 +38,6 @@ public class ChatContainer extends Container{
 				if(id == menu.AdvancedTextEnter.BUTTON_ENTER){
 					if(send != null)
 						send.write(getText());
-					addString(getText(), SeyprisMain.getMyName());
 					setText("");
 				}
 			}
@@ -146,6 +142,13 @@ public class ChatContainer extends Container{
 		chatMsg[overwritePos] = csa;
 		overwritePos++;
 		if(overwritePos>=CHAT_BUFFER)overwritePos = 0;
+	}
+	
+	/**
+	 * @param s Strings that will be automatically printed BOLD
+	 */
+	public void setKeyStrings(String[] s){
+		cpp.keyNames = s;
 	}
 
 }
