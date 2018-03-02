@@ -20,7 +20,7 @@ import static network.StaticComStrings.*;
  * such as encrypted Read+Write, Connection-Names, Connection-Keys etc.
  * @author Sven T. Schneider
  */
-public class TCPclient implements Runnable{
+public class TCPclient implements Runnable, IpInterface{
 
 	/**
 	 * RSA master-Key
@@ -67,6 +67,9 @@ public class TCPclient implements Runnable{
 	private boolean isConnected;
 	private boolean isRunning;
 	
+	/**
+	 * String representation of Inet-Adress+Port
+	 */
 	public final String connectionAdress;
 	
 	/**
@@ -283,6 +286,7 @@ public class TCPclient implements Runnable{
 	/**
 	 * @param s sends the String (encrypted) over the socket
 	 */
+	@Override
 	public void send(String s){
 		sema.acquireUninterruptibly();
 		if(!isConnected){
@@ -309,6 +313,7 @@ public class TCPclient implements Runnable{
 	 * Returns the next String the socket has received, will return null if there's nothing new to process
 	 * @return Next Message or null
 	 */
+	@Override
 	public String getNextInput(){
 		sema.acquireUninterruptibly();
 		if(input.isEmpty()){
@@ -323,6 +328,7 @@ public class TCPclient implements Runnable{
 	/**
 	 * Closes this connection
 	 */
+	@Override
 	public synchronized void closeConnection(String reason){
 		if(isConnected)
 			send(CLOSE_CONNECTION+reason);
@@ -331,10 +337,12 @@ public class TCPclient implements Runnable{
 	
 	///////////////////////////////////GETTER+SETTER/////////////////////////////////////
 	
+	@Override
 	public synchronized boolean isConnected() {
 		return isConnected && !socket.isClosed();
 	}
 	
+	@Override
 	public synchronized boolean isRunning() {
 		return isRunning;
 	}
@@ -343,21 +351,17 @@ public class TCPclient implements Runnable{
 		isRunning = r;
 	}
 	
+	@Override
 	public RSAsaveKEY getOtherKey() {
 		return otherKey;
 	}
 	
-	/**
-	 * @return the user/server-name connected to
-	 */
+	@Override
 	public String getOtherName() {
 		return otherName;
 	}
 	
-	/**
-	 * @return a String to identify the connection (will be the same for both sides); 
-	 * This will be used for message forwarding, FROM and TO Tags etc.
-	 */
+	@Override
 	public String getConnectionName() {
 		return connectionName;
 	}
