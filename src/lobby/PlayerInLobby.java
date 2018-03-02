@@ -24,4 +24,14 @@ public class PlayerInLobby {
 	 * Connection name, used as Send-Adress, NOT SYMMETRIC!
 	 */
 	public String connName_NSy;
+	
+	/**
+	 * The Team the Player is on, 0 for no team
+	 */
+	public int team;
+	
+	/**
+	 * The Faction, 0 for Random
+	 */
+	public int faction;
 }

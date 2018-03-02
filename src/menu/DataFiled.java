@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
 
@@ -16,6 +17,8 @@ public abstract class DataFiled extends Button{
 	public static final Color l3 = new Color(0,0,0,100);
 	
 	private boolean blinking = false;
+	
+	private BufferedImage ico;
 	
 	public DataFiled(int x, int y, int wi, int hi, Color c) {
 		super(x, y, wi, hi);
@@ -68,6 +71,10 @@ public abstract class DataFiled extends Button{
 			g.drawLine(xPos+2, yPos+2, xPos+xSize-2, yPos+2);
 			g.drawLine(xPos+xSize-2, yPos+3, xPos+xSize-2, yPos+ySize-2);
 			
+			if(ico != null){
+				g.drawImage(ico, xPos+xSize/2-ico.getWidth()/2, yPos+ySize/2-ico.getHeight()/2, null);
+			}
+			
 			g.setFont(font);
 			g.setColor(textColor);
 			if(bli)
@@ -98,5 +105,7 @@ public abstract class DataFiled extends Button{
 		setText(s);
 	}
 
-	
+	public void setIcon(BufferedImage i){
+		ico = i;
+	}
 }
